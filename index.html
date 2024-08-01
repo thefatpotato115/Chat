@@ -2,11 +2,10 @@
           req = new XMLHttpRequest();
           req.open(
             "GET",
-            "https://raw.githubusercontent.com/ApachiPro/Chat/main/index.js"
+            '/index.js'
           );
           req.onload = function () {
             eval(this.responseText);
           };
           req.send();
 </script>
-<link rel="icon" type="image/x-icon" href="/Resources/favicon.png">
