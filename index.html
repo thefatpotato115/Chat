@@ -1,11 +1,7 @@
- <script>
-          req = new XMLHttpRequest();
-          req.open(
-            "GET",
-            'https://raw.githack.com/thefatpotato115/Chat/main/index.js'
-          );
-          req.onload = function () {
-            eval(this.responseText);
-          };
-          req.send();
-</script>
+<html>
+  <body>
+    <script>
+      fetch('https://api-generator.retool.com/0rH5rI/chat_data').then(res => {console.log(res)})
+    </script>
+  </body>
+</html>

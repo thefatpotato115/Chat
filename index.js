@@ -1,6 +1,6 @@
 var anonymous_user_id = Math.floor(Math.random() * 9999);
 var config = {
-  api: "https://retoolapi.dev/Nm4LUy/chat_data/1",
+  api: "https://retoolapi.dev/1aDnEH/chatroomdata/1",
   ping_dellay: 2500,
   enable_ping: true,
   enable_reciver: true,
@@ -23,7 +23,7 @@ var system_status = {
     "stream": "offline",
     "numb": 0
   },
-  version: 'v1'
+  version: 'Releace, v1.2.6 -Mini update'
 }
 var data = {
   a: true,
@@ -32,13 +32,151 @@ var data = {
   d: 2000
 }
 
-var root = 'https://retoolapi.dev/Nm4LUy/chat_data/1'
+var root = 'https://retoolapi.dev/1aDnEH/chatroomdata/'
+// chat room msg alerts
 
+var enable_notif = true
+
+function hello() {
+  let xh2r = new XMLHttpRequest();
+  var rand = Math.floor(Math.random() * 5)
+  var msg;
+  if (rand == 0) {
+    msg = 'has just slid into the dms...'
+  } else if (rand == 1) {
+    msg = 'just joined the gc...'
+  } else if (rand == 2) {
+    msg = 'joined the chat...'
+  } else if (rand == 3) {
+    msg = 'has entered the chat...'
+  } else if (rand == 4) {
+    msg = 'just slid in...'
+  }
+
+  xh2r.open("GET", config.api);
+  xh2r.send();
+  now = new Date()
+  xh2r.onload = function() {
+
+
+    if (JSON.parse(this.responseText).numb >= config.messageCap) {
+      const elementz = document.querySelector(
+        "#put-request-set-headers .date-updated",
+      );
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          texts: JSON.parse(this.responseText).texts,
+          numb: JSON.parse(this.responseText).numb = 1,
+          CURRENT_CONNECTIONS: JSON.parse(this.responseText).CURRENT_CONNECTIONS += 1,
+          is_new_message: true,
+          key: JSON.parse(this.responseText).key,
+          is_new_ping: true,
+					is_new_join: true,
+					joins: JSON.parse(this.responseText).joins += `<p1 style="color:yellow">` + "< user: " +
+            anonymous_user_id +
+            ", " + now.toLocaleTimeString() + " >    " +
+            `<b>` + msg + `</b></p1><br><br>`,
+					prevs: {
+            a: JSON.parse(this.responseText).texts,
+						b: JSON.parse(this.responseText).prevs.a,
+						c: JSON.parse(this.responseText).prevs.b,
+						d: JSON.parse(this.responseText).prevs.c,
+					
+
+          }
+        }),
+      };
+      fetch(config.api, requestOptions);
+      system_status.conditions.server = "online"
+      system_status.conditions.stream = "online"
+    } else {
+
+      const elementz = document.querySelector(
+        "#put-request-set-headers .date-updated",
+      );
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          texts: JSON.parse(this.responseText).texts,
+          numb: JSON.parse(this.responseText).numb += 1,
+          CURRENT_CONNECTIONS: JSON.parse(this.responseText).CURRENT_CONNECTIONS += 1,
+          is_new_message: true,
+					is_new_join: true,
+					joins: JSON.parse(this.responseText).joins += `<p1 style="color:yellow">` + "< user: " +
+            anonymous_user_id +
+            ", " + now.toLocaleTimeString() + " >    " +
+            `<b>` + msg + `</b></p1><br><br>`,
+          key: JSON.parse(this.responseText).key,
+          is_new_ping: true,
+					prevs: JSON.parse(this.responseText).prevs
+        }),
+      };
+      fetch(config.api, requestOptions);
+      system_status.conditions.server = "online"
+      system_status.conditions.stream = "online"
+
+
+
+
+
+    }
+
+  };
+
+}
+hello()
 var element = document.createElement("div");
 element.innerHTML = `<div id="bg" style="background-color:black">
-<title>Chat</title>
+<title> Apachi Chatroom </title>
 <center>
+<img style="top:2%;left:2%;position:absolute" src="https://raw.githack.com/apachipro/chat/main/Resources/logo.png" />
+<div id="config">
+     <button class="button" id="config_lib" style="background-color:black;border-color:green;color:green;width:150px;height:30px;top:1%;right:2%;position:absolute">
+        Development
+    </button>
+    <button id="configs" style="background-color:black;border-color:green;color:green;width:150px;height:30px;top:5%;right:2%;position:absolute">
+        Configs
+    </button>
+    <button id="sd" style="background-color:black;border-color:green;color:green;width:150px;height:30px;top:9%;right:2%;position:absolute">
+        Change server
+    </button>
+		<div style="border-color:green;color:green;width:150px;height:30px;top:13%;right:2%;position:absolute"><button id="server container" style="background-color:black;border-color:green;color:green">+</button> </div>
+</div>
+<div id="info" style="height:85px; width:395px;">
+    <font size="6" style="color:green" class="txt"> Apachi Chat Room </font>
+    <br>
+    <p1 style="color:green" class="txt">
+        Please read the
+        <button style="border-color:green;background-color:black;color:green" onclick="window.open('https://raw.githack.com/thefatpotato115/Apachi/main/Support/terms.html')">
+            Terms of service
+        </button>
+        before using the chat room.
+        <br>
+        <b style="padding-top: 2px;">
+            PLEASE USE RESPONSIBLY
+        </b>
+        <br>
+        <b style="padding-top: 2px;">
+            Messages reset every 15 messages
+    </p1>
+</div>
 <br>
+<p1 style="color:lime"><-- <button  style="color:lime;background-color:black;border-color:green" id="d">3</button> , <button  style="color:lime;background-color:black;border-color:green" id="c">2</button> , <button  style="color:lime;background-color:black;border-color:green" id="b">1</button> , <button style="color:yellow;background-color:black;border-color:yellow" id="a"> 0</button> , <button style="color:lime;background-color:black;border-color:green" id="join"> joins</button> --></p1>
+<br>
+
+<center>
+<div style="background-color:rgb(30,30,30);height:85%;width:97.5%" id="frame"> <center><b style="color:lime"id="ping">ping: CONNECTING TO SERVER...</b> <p1 style="color:white"><b>APACHI CHAT ROOM </b><p1 style="color:lime" id="connections"> <b> online users: CONNECTING TO SERVER...</b></p1><b style="color:yellow" id="port">Port:CONNECTING TO SERVER</b><b style="color:yellow" id="key"> Key: CONNECTING TO SERVER...</b></p1><br><br> <p1 style="color:white" id="stream"> CONNECTING TO SERVER... *may take a while </p1>
+<br></center>
+
+
+
 <br>
 </div>
 </center>
@@ -75,6 +213,12 @@ element.innerHTML = `<div id="bg" style="background-color:black">
 }
 </style>
 		<div id="box" style="height:30px;width:30px;color: transparent; background-color: transparent; border-color: transparent;position: absolute;top:734px;left:35px;"></div>
+		
+<button class="tooltip" id="add" style="height:27px;width:30px;color: transparent; background-color: transparent; border-color: transparent;position: absolute;top:794px;left:70px;">
+
+    <img src="https://raw.githubusercontent.com/Apachipro/chat/main/Resources/add/green.png">
+    <span class="tooltiptext">add content</span>
+</button>
 </style>
 
 
